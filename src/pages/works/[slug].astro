@@ -1,0 +1,28 @@
+---
+// 制作物ごとの静的個別紹介ページ（/works/[slug]/）
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import WorkDetailHeader from '../../components/WorkDetailHeader.astro';
+import WorkDetailBody from '../../components/WorkDetailBody.astro';
+import { WORKS, type WorkItem } from '../../data/portfolio';
+
+export function getStaticPaths() {
+  return WORKS.map((work) => ({
+    params: { slug: work.slug },
+    props: { work },
+  }));
+}
+
+interface Props {
+  work: WorkItem;
+}
+
+const { work } = Astro.props;
+const otherWorks = WORKS.filter((item) => item.slug !== work.slug);
+---
+
+<BaseLayout title={`${work.title} | 谷口 瑞季`} description={work.summary}>
+  <article>
+    <WorkDetailHeader work={work} />
+    <WorkDetailBody work={work} otherWorks={otherWorks} />
+  </article>
+</BaseLayout>

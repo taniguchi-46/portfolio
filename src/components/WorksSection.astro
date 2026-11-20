@@ -1,0 +1,91 @@
+---
+// 制作物一覧セクション（横並び最大3列＋代表的な技術キーワード＋個別紹介ページへの導線）
+import { WORKS } from '../data/portfolio';
+import ArrowIcon from './ArrowIcon.astro';
+
+// サブパス公開時でも画像・個別ページリンクが切れないようベースURLを正規化
+const baseUrl = import.meta.env.BASE_URL.replace(/\/$/, '');
+---
+
+<section id="works" aria-labelledby="works-heading" class="mx-auto max-w-[1400px] px-6 sm:px-10 lg:px-10 xl:px-14">
+  <div class="border-t border-line py-20 sm:py-28">
+    <h2
+      id="works-heading"
+      class="font-serif text-2xl tracking-[0.08em] text-ink sm:text-[1.75rem]"
+    >
+      制作物
+    </h2>
+
+    <ol class="mt-10 grid grid-cols-1 gap-x-8 gap-y-16 sm:mt-14 md:grid-cols-2 lg:grid-cols-3 xl:gap-x-10">
+      {
+        WORKS.map((work) => {
+          const detailUrl = `${baseUrl}/works/${work.slug}/`;
+          return (
+            <li class="flex flex-col">
+              <article class="flex h-full flex-col">
+                <figure class="mb-6">
+                  <a
+                    href={detailUrl}
+                    class="group block aspect-[16/10] overflow-hidden border border-line bg-base transition-colors duration-300 hover:border-accent/60"
+                  >
+                    <img
+                      src={`${baseUrl}${work.imageSrc}`}
+                      alt={work.imageAlt}
+                      loading="lazy"
+                      decoding="async"
+                      class="h-full w-full object-cover"
+                    />
+                  </a>
+                  {work.isDemoImage && (
+                    <figcaption class="mt-2 text-right text-xs tracking-[0.06em] text-muted">
+                      イメージ（仮）
+                    </figcaption>
+                  )}
+                </figure>
+
+                <header class="space-y-2">
+                  <h3 class="font-serif text-2xl leading-snug tracking-[0.04em] text-ink sm:text-[1.6rem]">
+                    <a
+                      href={detailUrl}
+                      class="transition-colors duration-300 hover:text-accent"
+                    >
+                      {work.title}
+                    </a>
+                  </h3>
+                  <p class="text-sm tracking-[0.05em] text-ink/70">
+                    <span>{work.category}</span>
+                    <span aria-hidden="true" class="mx-2 text-muted">/</span>
+                    <span>{work.platform}</span>
+                  </p>
+                </header>
+
+                <p class="mt-5 text-[0.95rem] leading-[1.9] text-ink/90 sm:text-base">
+                  {work.summary}
+                </p>
+
+                {work.keyTechnologies && work.keyTechnologies.length > 0 ? (
+                  <p class="mt-5 border-t border-line/80 pt-4 text-xs leading-relaxed tracking-[0.03em] text-ink/70 sm:text-[0.8125rem]">
+                    {work.keyTechnologies.join(' / ')}
+                  </p>
+                ) : (
+                  work.note && (
+                    <p class="mt-5 border-t border-line/80 pt-4 text-xs leading-relaxed text-ink/70 sm:text-[0.8125rem]">
+                      {work.note}
+                    </p>
+                  )
+                )}
+
+                <div class="mt-auto pt-6">
+                  <a href={detailUrl} class="editorial-link text-sm sm:text-[0.95rem]">
+                    <span>詳しく見る</span>
+                    <ArrowIcon direction="right" />
+                  </a>
+                </div>
+              </article>
+            </li>
+          );
+        })
+      }
+    </ol>
+  </div>
+</section>

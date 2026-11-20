@@ -1,0 +1,58 @@
+---
+// 全ページ共通レイアウト（HTML骨格・フォント読み込み・左側ハンバーガーメニュー・フッター枠組み）
+import '../styles/global.css';
+import SideNavigation from '../components/SideNavigation.astro';
+import Footer from '../components/Footer.astro';
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const {
+  title = '谷口 瑞季 | Portfolio',
+  description = '清風情報工科学院 谷口 瑞季（taniguchi mizuki）のポートフォリオサイトです。制作物（kokomane、AtlasNote、BoreasTable）、学習内容、所持資格、連絡先を掲載しています。',
+} = Astro.props;
+
+// サブパス公開時の静的アセットパス解決用にベースURLを正規化
+const baseUrl = import.meta.env.BASE_URL.replace(/\/$/, '');
+---
+
+<!doctype html>
+<html lang="ja" id="top">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content={description} />
+    <meta name="generator" content={Astro.generator} />
+    <meta name="theme-color" content="#F7F6F2" />
+    <link rel="icon" type="image/svg+xml" href={`${baseUrl}/favicon.svg`} />
+
+    <!-- Google Fonts: 見出し用 Shippori Mincho（本文・UIはブラウザ標準のプレーンなデフォルトを使用） -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+
+    <title>{title}</title>
+  </head>
+  <body class="flex min-h-dvh flex-col bg-base text-ink">
+    <a
+      href="#main-content"
+      class="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-20 focus:z-50 focus:bg-base focus:px-4 focus:py-2 focus:text-sm focus:text-ink focus:ring-1 focus:ring-accent"
+    >
+      本文へスキップ
+    </a>
+
+    <SideNavigation />
+
+    <div class="flex min-h-dvh flex-1 flex-col pt-14 md:pt-0 md:pl-[60px]">
+      <main id="main-content" class="flex-1">
+        <slot />
+      </main>
+      <Footer />
+    </div>
+  </body>
+</html>

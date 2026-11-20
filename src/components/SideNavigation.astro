@@ -1,0 +1,145 @@
+---
+// 左側固定ハンバーガーメニューおよびサイドドロワー（ヨルシカ公式サイトの構造を参照）
+// PC: 左端 60px の縦レール＋上部 60x60px のハンバーガー枠。開くと右隣に静かなサイドパネルが展開
+// Mobile: 上部 56px バーの左端に 56x56px のハンバーガーボタンを配置し、左からドロワーを展開
+import { PROFILE } from '../data/portfolio';
+import ExternalLinkIcon from './ExternalLinkIcon.astro';
+
+const baseUrl = import.meta.env.BASE_URL.replace(/\/$/, '');
+
+const drawerItems = [
+  { label: 'トップ', href: `${baseUrl}/`, external: false },
+  { label: '制作物', href: `${baseUrl}/#works`, external: false },
+  { label: '学習と取り組み', href: `${baseUrl}/#about`, external: false },
+  { label: '所持資格', href: `${baseUrl}/#qualifications`, external: false },
+  { label: '連絡先', href: `${baseUrl}/#contact`, external: false },
+  { label: 'GitHub', href: PROFILE.githubUrl, external: true },
+];
+---
+
+<!-- モバイル用トップバー（左端のハンバーガーボタンの右隣にサイト名を静かに配置） -->
+<header class="fixed top-0 right-0 left-0 z-40 flex h-14 items-center border-b border-line bg-base/95 pr-6 pl-[72px] backdrop-blur-xs md:hidden">
+  <a
+    href={`${baseUrl}/`}
+    class="-my-2 inline-flex items-center py-2.5 font-serif text-base tracking-[0.08em] text-ink transition-colors duration-300 hover:text-accent"
+  >
+    {PROFILE.nameJa}
+  </a>
+</header>
+
+<!-- 左側ハンバーガーメニューボタン（PCでは左端 60px フルハイトレール、モバイルでは左上 56x56px） -->
+<button
+  id="drawer-toggle"
+  type="button"
+  aria-expanded="false"
+  aria-controls="site-drawer"
+  aria-label="メニューを開く"
+  class="drawer-trigger fixed top-0 left-0 z-50 flex h-14 w-14 cursor-pointer flex-col items-center p-0 md:inset-y-0 md:h-dvh md:w-[60px]"
+>
+  <span class="drawer-trigger-cell flex h-14 w-14 shrink-0 flex-col items-center justify-center gap-[5px] md:h-[60px] md:w-[60px]">
+    <span class="hamburger-line hamburger-line--top" aria-hidden="true"></span>
+    <span class="hamburger-line hamburger-line--middle" aria-hidden="true"></span>
+    <span class="hamburger-line hamburger-line--bottom" aria-hidden="true"></span>
+  </span>
+</button>
+
+<!-- ドロワー背面の静かな暗幕オーバーレイ -->
+<div
+  id="drawer-backdrop"
+  data-open="false"
+  aria-hidden="true"
+  class="drawer-backdrop fixed inset-0 z-30"
+></div>
+
+<!-- 左サイドドロワー本体 -->
+<nav
+  id="site-drawer"
+  aria-label="サイトメニュー"
+  aria-hidden="true"
+  data-open="false"
+  class="drawer-panel fixed top-14 bottom-0 left-0 z-40 flex w-[min(320px,86vw)] flex-col justify-between overflow-y-auto px-10 py-12 md:top-0 md:left-[60px] md:w-[340px] md:px-14 md:py-20"
+>
+  <ul class="space-y-6">
+    {
+      drawerItems.map((item) => (
+        <li>
+          <a
+            href={item.href}
+            target={item.external ? '_blank' : undefined}
+            rel={item.external ? 'noopener noreferrer' : undefined}
+            data-drawer-link
+            class="drawer-nav-link inline-flex items-center gap-2.5 py-1.5 text-sm tracking-[0.2em]"
+          >
+            <span>{item.label}</span>
+            {item.external && <ExternalLinkIcon class="h-3.5 w-3.5 opacity-80" />}
+          </a>
+        </li>
+      ))
+    }
+  </ul>
+
+  <div class="mt-12 border-t border-[#F7F6F2]/25 pt-6 text-xs tracking-[0.12em] text-[#F7F6F2]/75">
+    <p class="font-serif text-sm tracking-[0.08em] text-[#F7F6F2]">{PROFILE.nameJa}</p>
+    <p class="mt-1">{PROFILE.nameEn}</p>
+  </div>
+</nav>
+
+<script>
+  // 最小限の Vanilla JS による左サイドドロワー開閉・キーボード操作対応
+  const toggleBtn = document.getElementById('drawer-toggle');
+  const drawer = document.getElementById('site-drawer');
+  const backdrop = document.getElementById('drawer-backdrop');
+  const drawerLinks = document.querySelectorAll<HTMLAnchorElement>('[data-drawer-link]');
+
+  if (toggleBtn && drawer && backdrop) {
+    let isOpen = false;
+
+    const setDrawerState = (open: boolean, returnFocus = false) => {
+      isOpen = open;
+      toggleBtn.setAttribute('aria-expanded', String(open));
+      toggleBtn.setAttribute('aria-label', open ? 'メニューを閉じる' : 'メニューを開く');
+      drawer.setAttribute('aria-hidden', String(!open));
+      drawer.dataset.open = String(open);
+      backdrop.dataset.open = String(open);
+      document.body.style.overflow = open ? 'hidden' : '';
+
+      // 閉じている間はドロワー内リンクをタブ移動対象から外す
+      drawerLinks.forEach((link) => {
+        if (open) {
+          link.removeAttribute('tabindex');
+        } else {
+          link.setAttribute('tabindex', '-1');
+        }
+      });
+
+      if (open) {
+        drawerLinks[0]?.focus();
+      } else if (returnFocus) {
+        toggleBtn.focus();
+      }
+    };
+
+    // 初期状態は閉じた状態で tabindex を整理
+    setDrawerState(false);
+
+    toggleBtn.addEventListener('click', () => {
+      setDrawerState(!isOpen, isOpen);
+    });
+
+    backdrop.addEventListener('click', () => {
+      if (isOpen) setDrawerState(false, true);
+    });
+
+    drawerLinks.forEach((link) => {
+      link.addEventListener('click', () => {
+        if (isOpen) setDrawerState(false);
+      });
+    });
+
+    window.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape' && isOpen) {
+        setDrawerState(false, true);
+      }
+    });
+  }
+</script>

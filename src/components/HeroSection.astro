@@ -1,0 +1,45 @@
+---
+// 扉セクション（氏名・所属・主要導線のみを余白の中に静かに配置）
+import { PROFILE } from '../data/portfolio';
+import ExternalLinkIcon from './ExternalLinkIcon.astro';
+---
+
+<section aria-labelledby="hero-heading" class="mx-auto max-w-[1400px] px-6 pt-20 pb-24 sm:px-10 sm:pt-32 sm:pb-32 lg:px-10 xl:px-14">
+  <div class="grid grid-cols-1 gap-y-10 md:grid-cols-12 md:gap-x-12">
+    <div class="md:col-span-8 md:col-start-5">
+      <h1
+        id="hero-heading"
+        class="font-serif text-4xl leading-[1.25] tracking-[0.08em] text-ink sm:text-5xl"
+      >
+        {PROFILE.nameJa}
+      </h1>
+
+      <p class="mt-3 text-sm tracking-[0.16em] text-muted">
+        {PROFILE.nameEn}
+      </p>
+
+      <div aria-hidden="true" class="editorial-rule mt-10 h-px w-16 bg-ink/20"></div>
+
+      <p class="mt-10 max-w-[36rem] text-sm leading-[2] text-ink/90 sm:text-base">
+        <span class="block">{PROFILE.school}</span>
+        <span class="block">{PROFILE.department}</span>
+        <span class="block">{PROFILE.course}</span>
+      </p>
+
+      <div class="mt-10 flex flex-wrap items-center gap-x-8 gap-y-4 text-sm">
+        <a href="#works" class="editorial-link">
+          <span>制作物を見る</span>
+        </a>
+        <a
+          href={PROFILE.githubUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="editorial-link"
+        >
+          <span>GitHub</span>
+          <ExternalLinkIcon />
+        </a>
+      </div>
+    </div>
+  </div>
+</section>

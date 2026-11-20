@@ -1,0 +1,188 @@
+---
+// 制作物紹介ページの本文セクション（概要・特徴/基本方針・カテゴリ別技術構成・他作品リンク）
+import type { WorkItem } from '../data/portfolio';
+import ArrowIcon from './ArrowIcon.astro';
+
+interface Props {
+  work: WorkItem;
+  otherWorks: WorkItem[];
+}
+
+const { work, otherWorks } = Astro.props;
+const baseUrl = import.meta.env.BASE_URL.replace(/\/$/, '');
+---
+
+<!-- 概要 -->
+<section aria-labelledby="detail-overview-heading" class="mx-auto max-w-[1400px] px-6 sm:px-10 lg:px-10 xl:px-14">
+  <div class="border-t border-line py-16 sm:py-24">
+    <div class="grid grid-cols-1 gap-y-8 md:grid-cols-12 md:gap-x-12">
+      <div class="md:col-span-4">
+        <h2
+          id="detail-overview-heading"
+          class="font-serif text-xl tracking-[0.08em] text-ink sm:text-2xl"
+        >
+          概要
+        </h2>
+      </div>
+
+      <div class="max-w-3xl space-y-6 md:col-span-8">
+        {
+          work.detailParagraphs.map((paragraph) => (
+            <p class="text-[0.95rem] leading-[1.95] text-ink/90 sm:text-base">
+              {paragraph}
+            </p>
+          ))
+        }
+
+        {work.note && (
+          <p class="border-t border-line/80 pt-5 text-xs leading-relaxed text-ink/70 sm:text-sm">
+            {work.note}
+          </p>
+        )}
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 主な特徴・基本方針・今後の掲載予定 -->
+{work.highlights && work.highlights.length > 0 && (
+  <section aria-labelledby="detail-highlights-heading" class="mx-auto max-w-[1400px] px-6 sm:px-10 lg:px-10 xl:px-14">
+    <div class="border-t border-line py-16 sm:py-24">
+      <div class="grid grid-cols-1 gap-y-8 md:grid-cols-12 md:gap-x-12">
+        <div class="md:col-span-4">
+          <h2
+            id="detail-highlights-heading"
+            class="font-serif text-xl tracking-[0.08em] text-ink sm:text-2xl"
+          >
+            {work.highlightsHeading ?? '特徴'}
+          </h2>
+        </div>
+
+        <div class="max-w-3xl md:col-span-8">
+          <ol class="divide-y divide-line">
+            {
+              work.highlights.map((item, index) => (
+                <li
+                  class:list={[
+                    'space-y-2',
+                    index === 0
+                      ? 'pb-7'
+                      : index === work.highlights!.length - 1
+                        ? 'pt-7'
+                        : 'py-7',
+                  ]}
+                >
+                  <h3 class="font-serif text-lg leading-snug tracking-[0.04em] text-ink sm:text-xl">
+                    {item.title}
+                  </h3>
+                  <p class="text-sm leading-[1.9] text-ink/85 sm:text-[0.95rem]">
+                    {item.description}
+                  </p>
+                </li>
+              ))
+            }
+          </ol>
+        </div>
+      </div>
+    </div>
+  </section>
+)}
+
+<!-- 技術構成（カテゴリ別定義リスト） -->
+{work.techTable && work.techTable.length > 0 && (
+  <section aria-labelledby="detail-tech-heading" class="mx-auto max-w-[1400px] px-6 sm:px-10 lg:px-10 xl:px-14">
+    <div class="border-t border-line py-16 sm:py-24">
+      <div class="grid grid-cols-1 gap-y-8 md:grid-cols-12 md:gap-x-12">
+        <div class="md:col-span-4">
+          <h2
+            id="detail-tech-heading"
+            class="font-serif text-xl tracking-[0.08em] text-ink sm:text-2xl"
+          >
+            技術構成
+          </h2>
+        </div>
+
+        <div class="max-w-3xl md:col-span-8">
+          <dl class="divide-y divide-line">
+            {
+              work.techTable.map((row, index) => (
+                <div
+                  class:list={[
+                    'grid grid-cols-1 gap-y-1 sm:grid-cols-12 sm:gap-x-6',
+                    index === 0
+                      ? 'pb-5'
+                      : index === work.techTable!.length - 1
+                        ? 'pt-5'
+                        : 'py-5',
+                  ]}
+                >
+                  <dt class="text-xs tracking-[0.05em] text-ink/70 sm:col-span-4 sm:pt-0.5 sm:text-sm">
+                    {row.category}
+                  </dt>
+                  <dd class="text-sm leading-relaxed text-ink sm:col-span-8 sm:text-[0.95rem]">
+                    {row.value}
+                  </dd>
+                </div>
+              ))
+            }
+          </dl>
+        </div>
+      </div>
+    </div>
+  </section>
+)}
+
+<!-- 他の制作物・一覧へ戻る -->
+<section aria-labelledby="other-works-heading" class="mx-auto max-w-[1400px] px-6 sm:px-10 lg:px-10 xl:px-14">
+  <div class="border-t border-line py-16 sm:py-24">
+    <div class="grid grid-cols-1 gap-y-8 md:grid-cols-12 md:gap-x-12">
+      <div class="md:col-span-4">
+        <h2
+          id="other-works-heading"
+          class="font-serif text-xl tracking-[0.08em] text-ink sm:text-2xl"
+        >
+          他の制作物
+        </h2>
+      </div>
+
+      <div class="max-w-3xl md:col-span-8">
+        <ul class="divide-y divide-line">
+          {
+            otherWorks.map((other, index) => (
+              <li
+                class:list={[
+                  index === 0 ? 'pb-6' : index === otherWorks.length - 1 ? 'pt-6' : 'py-6',
+                ]}
+              >
+                <a
+                  href={`${baseUrl}/works/${other.slug}/`}
+                  class="group flex items-baseline justify-between gap-6 py-1"
+                >
+                  <div>
+                    <span class="font-serif text-xl tracking-[0.04em] text-ink transition-colors duration-300 group-hover:text-accent sm:text-2xl">
+                      {other.title}
+                    </span>
+                    <span class="mt-1 block text-xs tracking-[0.05em] text-ink/70 sm:mt-0 sm:ml-4 sm:inline">
+                      {other.category} / {other.platform}
+                    </span>
+                  </div>
+                  <ArrowIcon
+                    direction="right"
+                    class="h-4 w-4 shrink-0 text-ink/60 transition-colors duration-300 group-hover:text-accent"
+                  />
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+
+        <div class="mt-10 pt-2">
+          <a href={`${baseUrl}/#works`} class="editorial-link text-sm sm:text-[0.95rem]">
+            <ArrowIcon direction="left" />
+            <span>制作物一覧へ戻る</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,41 @@
+---
+// 所属・学習内容セクション（装飾的なゲージを使わず、端正な定義リストで記述）
+import { LEARNING_TOPICS } from '../data/portfolio';
+---
+
+<section id="about" aria-labelledby="about-heading" class="mx-auto max-w-[1400px] px-6 sm:px-10 lg:px-10 xl:px-14">
+  <div class="border-t border-line py-20 sm:py-28">
+    <div class="grid grid-cols-1 gap-y-10 md:grid-cols-12 md:gap-x-12">
+      <div class="md:col-span-4">
+        <h2
+          id="about-heading"
+          class="font-serif text-xl tracking-[0.08em] text-ink sm:text-2xl"
+        >
+          学習と取り組み
+        </h2>
+      </div>
+
+      <div class="max-w-3xl md:col-span-8">
+        <dl class="divide-y divide-line">
+          {
+            LEARNING_TOPICS.map((topic, index) => (
+              <div
+                class:list={[
+                  'grid grid-cols-1 gap-y-1.5 sm:grid-cols-12 sm:gap-x-6',
+                  index === 0 ? 'pb-6' : index === LEARNING_TOPICS.length - 1 ? 'pt-6' : 'py-6',
+                ]}
+              >
+                <dt class="text-xs tracking-[0.06em] text-ink/70 sm:col-span-4 sm:pt-1">
+                  {topic.label}
+                </dt>
+                <dd class="text-sm leading-relaxed text-ink sm:col-span-8 sm:text-[0.95rem]">
+                  {topic.detail}
+                </dd>
+              </div>
+            ))
+          }
+        </dl>
+      </div>
+    </div>
+  </div>
+</section>

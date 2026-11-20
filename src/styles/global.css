@@ -1,0 +1,247 @@
+@import "tailwindcss";
+
+/* デザインシステム「静謐と余白（Quiet Editorial）」トークン定義 */
+/* base は Tailwind の text-base（1rem）との名前衝突を避けるため、@theme では背景色トークンとして定義する */
+:root {
+  --color-base: #F7F6F2;
+  --ease-editorial: cubic-bezier(0.16, 1, 0.3, 1);
+  --drawer-rail-width: 60px;
+}
+
+@theme {
+  /* カラーパレット */
+  --background-color-base: #F7F6F2;
+  --color-ink: #1E2022;
+  --color-muted: #8A8F98;
+  --color-line: #E2E0D8;
+  --color-accent: #4A6572;
+
+  /* タイポグラフィ（見出しは明朝体、本文・UIはブラウザ標準のプレーンなデフォルト） */
+  --font-serif: "Shippori Mincho", "Hiragino Mincho ProN", "Yu Mincho", serif;
+  --font-sans: sans-serif;
+}
+
+@layer base {
+  html {
+    background-color: var(--color-base);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    scroll-behavior: smooth;
+    scroll-padding-top: 4.5rem;
+    scrollbar-color: var(--color-line) var(--color-base);
+    scrollbar-width: thin;
+  }
+
+  @media (min-width: 768px) {
+    html {
+      scroll-padding-top: 2.5rem;
+    }
+  }
+
+  body {
+    min-height: 100dvh;
+    background-color: var(--color-base);
+    color: var(--color-ink);
+    font-weight: 400;
+    line-height: 1.85;
+    text-wrap: pretty;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-family: var(--font-serif);
+    font-weight: 500;
+    letter-spacing: 0.05em;
+    text-wrap: balance;
+  }
+
+  a,
+  button {
+    text-underline-offset: 0.35em;
+    text-decoration-thickness: 1px;
+  }
+
+  /* キーボード操作時のフォーカス視認性をパレットで統一 */
+  :focus-visible {
+    outline: 1.5px solid var(--color-accent);
+    outline-offset: 4px;
+    border-radius: 2px;
+  }
+
+  ::selection {
+    background-color: color-mix(in srgb, var(--color-accent) 18%, transparent);
+    color: var(--color-ink);
+  }
+}
+
+/* 扉の極細罫線が静かに引かれる単発モーション */
+@keyframes draw-rule {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
+
+.editorial-rule {
+  transform-origin: left center;
+  animation: draw-rule 0.9s var(--ease-editorial) both;
+}
+
+/* 控えめな下線リンクのホバー演出（視覚高さを保ちつつタップ領域を確保） */
+.editorial-link {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
+  padding-block: 0.5rem;
+  margin-block: -0.5rem;
+  color: var(--color-ink);
+  transition: color 0.3s var(--ease-editorial);
+}
+
+.editorial-link::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0.35rem;
+  height: 1px;
+  background-color: var(--color-line);
+  transition: background-color 0.3s var(--ease-editorial);
+}
+
+.editorial-link:hover,
+.editorial-link:focus-visible {
+  color: var(--color-accent);
+}
+
+.editorial-link:hover::after,
+.editorial-link:focus-visible::after {
+  background-color: var(--color-accent);
+}
+
+/* 左側ハンバーガーメニュー・ドロワー（ヨルシカ公式サイトの静謐なサイドレール構造を参照） */
+.drawer-trigger {
+  background-color: var(--color-accent);
+  color: var(--color-base);
+  transition: background-color 0.35s var(--ease-editorial);
+}
+
+.drawer-trigger:hover {
+  background-color: color-mix(in srgb, var(--color-accent) 88%, var(--color-ink));
+}
+
+.drawer-trigger:focus-visible {
+  outline: 1.5px solid var(--color-base);
+  outline-offset: -4px;
+}
+
+.drawer-trigger-cell {
+  border-bottom: 1px solid color-mix(in srgb, var(--color-base) 28%, transparent);
+  transition: background-color 0.35s var(--ease-editorial);
+}
+
+.drawer-trigger[aria-expanded="true"] .drawer-trigger-cell {
+  background-color: color-mix(in srgb, var(--color-accent) 78%, var(--color-ink));
+}
+
+/* ハンバーガー3本線からクローズ（×）への繊細な変形 */
+.hamburger-line {
+  display: block;
+  width: 20px;
+  height: 1px;
+  background-color: var(--color-base);
+  transform-origin: center;
+  transition:
+    transform 0.35s var(--ease-editorial),
+    opacity 0.25s var(--ease-editorial);
+}
+
+.drawer-trigger[aria-expanded="true"] .hamburger-line--top {
+  transform: translateY(6px) rotate(45deg);
+}
+
+.drawer-trigger[aria-expanded="true"] .hamburger-line--middle {
+  opacity: 0;
+  transform: scaleX(0);
+}
+
+.drawer-trigger[aria-expanded="true"] .hamburger-line--bottom {
+  transform: translateY(-6px) rotate(-45deg);
+}
+
+/* 左サイドドロワーパネル */
+.drawer-panel {
+  background-color: var(--color-accent);
+  color: var(--color-base);
+  border-left: 1px solid color-mix(in srgb, var(--color-base) 26%, transparent);
+  transform: translateX(-100%);
+  opacity: 0;
+  visibility: hidden;
+  transition:
+    transform 0.45s var(--ease-editorial),
+    opacity 0.35s var(--ease-editorial),
+    visibility 0.45s;
+}
+
+.drawer-panel[data-open="true"] {
+  transform: translateX(0);
+  opacity: 1;
+  visibility: visible;
+}
+
+.drawer-backdrop {
+  background-color: color-mix(in srgb, var(--color-ink) 36%, transparent);
+  opacity: 0;
+  visibility: hidden;
+  transition:
+    opacity 0.4s var(--ease-editorial),
+    visibility 0.4s;
+}
+
+.drawer-backdrop[data-open="true"] {
+  opacity: 1;
+  visibility: visible;
+}
+
+.drawer-nav-link {
+  color: var(--color-base);
+  transition: opacity 0.25s var(--ease-editorial), transform 0.3s var(--ease-editorial);
+}
+
+.drawer-nav-link:hover,
+.drawer-nav-link:focus-visible {
+  opacity: 0.72;
+  transform: translateX(4px);
+}
+
+.drawer-nav-link:focus-visible {
+  outline: 1.5px solid var(--color-base);
+  outline-offset: 6px;
+}
+
+/* モーション低減設定（アクセシビリティ配慮） */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  .editorial-rule {
+    animation: none;
+  }
+
+  .editorial-link,
+  .editorial-link::after,
+  .drawer-trigger,
+  .drawer-trigger-cell,
+  .hamburger-line,
+  .drawer-panel,
+  .drawer-backdrop,
+  .drawer-nav-link {
+    transition: none;
+  }
+}

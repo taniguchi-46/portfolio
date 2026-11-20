@@ -1,0 +1,25 @@
+---
+// 共通サイトフッター（書籍の奥付のように静かに締める）
+import { PROFILE } from '../data/portfolio';
+
+const currentYear = new Date().getFullYear();
+---
+
+<footer>
+  <div class="mx-auto max-w-[1400px] px-6 sm:px-10 lg:px-10 xl:px-14">
+    <div class="flex flex-col items-start justify-between gap-4 border-t border-line py-10 text-xs tracking-[0.06em] text-ink/70 sm:flex-row sm:items-center sm:py-12">
+      <p class="tabular-nums">
+        &copy; {currentYear} {PROFILE.nameJa}
+        <span aria-hidden="true" class="mx-2 text-muted">/</span>
+        <span class="text-muted">{PROFILE.nameEn}</span>
+      </p>
+
+      <a
+        href="#top"
+        class="-my-2.5 inline-flex items-center py-3 transition-colors duration-300 hover:text-accent"
+      >
+        先頭へ戻る
+      </a>
+    </div>
+  </div>
+</footer>

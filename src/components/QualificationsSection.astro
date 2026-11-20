@@ -1,0 +1,40 @@
+---
+// 所持資格セクション（極細罫線で整列させた静かな目録）
+import { QUALIFICATIONS } from '../data/portfolio';
+---
+
+<section
+  id="qualifications"
+  aria-labelledby="qualifications-heading"
+  class="mx-auto max-w-[1400px] px-6 sm:px-10 lg:px-10 xl:px-14"
+>
+  <div class="border-t border-line py-20 sm:py-28">
+    <div class="grid grid-cols-1 gap-y-10 md:grid-cols-12 md:gap-x-12">
+      <div class="md:col-span-4">
+        <h2
+          id="qualifications-heading"
+          class="font-serif text-xl tracking-[0.08em] text-ink sm:text-2xl"
+        >
+          所持資格
+        </h2>
+      </div>
+
+      <div class="max-w-3xl md:col-span-8">
+        <ul class="divide-y divide-line">
+          {
+            QUALIFICATIONS.map((qualification, index) => (
+              <li
+                class:list={[
+                  'text-sm leading-relaxed text-ink sm:text-[0.95rem]',
+                  index === 0 ? 'pb-5' : index === QUALIFICATIONS.length - 1 ? 'pt-5' : 'py-5',
+                ]}
+              >
+                {qualification}
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,85 @@
+---
+// 制作物紹介ページのヘッダー部（戻る導線・作品タイトル・メタ情報・大判イメージ画像）
+import type { WorkItem } from '../data/portfolio';
+import ArrowIcon from './ArrowIcon.astro';
+import ExternalLinkIcon from './ExternalLinkIcon.astro';
+
+interface Props {
+  work: WorkItem;
+}
+
+const { work } = Astro.props;
+const baseUrl = import.meta.env.BASE_URL.replace(/\/$/, '');
+---
+
+<header class="mx-auto max-w-[1400px] px-6 pt-12 pb-16 sm:px-10 sm:pt-16 sm:pb-24 lg:px-10 xl:px-14">
+  <nav aria-label="パンくずナビゲーション">
+    <a
+      href={`${baseUrl}/#works`}
+      class="-my-2 inline-flex items-center gap-2 py-2.5 text-sm text-ink/75 transition-colors duration-300 hover:text-accent"
+    >
+      <ArrowIcon direction="left" />
+      <span>制作物一覧へ戻る</span>
+    </a>
+  </nav>
+
+  <div class="mt-12 grid grid-cols-1 gap-y-8 sm:mt-16 md:grid-cols-12 md:gap-x-12">
+    <div class="md:col-span-8 md:col-start-5">
+      <h1 class="font-serif text-4xl leading-[1.2] tracking-[0.06em] text-ink sm:text-5xl">
+        {work.title}
+      </h1>
+
+      <p class="mt-4 flex flex-wrap items-center gap-y-1 text-sm tracking-[0.05em] text-ink/75">
+        <span>{work.category}</span>
+        <span aria-hidden="true" class="mx-2.5 text-muted">/</span>
+        <span>{work.platform}</span>
+        {
+          work.status && (
+            <>
+              <span aria-hidden="true" class="mx-2.5 text-muted">/</span>
+              <span class="text-ink/70">{work.status}</span>
+            </>
+          )
+        }
+      </p>
+
+      <div aria-hidden="true" class="editorial-rule mt-8 h-px w-16 bg-ink/20"></div>
+
+      {work.repositoryUrl && (
+        <div class="mt-8">
+          <a
+            href={work.repositoryUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="editorial-link text-sm sm:text-[0.95rem]"
+          >
+            <span>
+              {work.isPrivateRepository
+                ? 'GitHub リポジトリ（非公開）'
+                : 'GitHub リポジトリ'}
+            </span>
+            <ExternalLinkIcon />
+          </a>
+        </div>
+      )}
+    </div>
+  </div>
+
+  <figure class="mt-14 sm:mt-16">
+    <div class="mx-auto max-w-5xl">
+      <div class="aspect-[16/10] overflow-hidden border border-line bg-base">
+        <img
+          src={`${baseUrl}${work.imageSrc}`}
+          alt={work.imageAlt}
+          decoding="async"
+          class="h-full w-full object-cover"
+        />
+      </div>
+      {work.isDemoImage && (
+        <figcaption class="mt-2.5 text-right text-xs tracking-[0.06em] text-muted">
+          イメージ（仮）
+        </figcaption>
+      )}
+    </div>
+  </figure>
+</header>
