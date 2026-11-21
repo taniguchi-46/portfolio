@@ -7,7 +7,7 @@
 清風情報工科学院 谷口 瑞季（taniguchi mizuki）の個人ポートフォリオサイトです。  
 デザインコンセプトは **「静謐と余白（Quiet Editorial）」** とし、過剰な装飾を排してタイポグラフィと余白のバランスで魅せる、軽量で高速な静的サイトを目指しています。
 
-- **公開先**: GitHub Pages（[https://taniguchi-46.github.io/taniguchi-46portfolio.github.io/](https://taniguchi-46.github.io/taniguchi-46portfolio.github.io/)）
+- **公開先**: GitHub Pages（[https://taniguchi-46.github.io/portfolio/](https://taniguchi-46.github.io/portfolio/)）
 - **GitHub**: [https://github.com/taniguchi-46](https://github.com/taniguchi-46)
 
 ## 技術スタック
@@ -51,7 +51,7 @@ npm install
 npm run dev
 ```
 
-サブパス設定（`base: '/taniguchi-46portfolio.github.io'`）が有効なため、デフォルトでは `http://localhost:4321/taniguchi-46portfolio.github.io/` でプレビューを確認できます。
+サブパス設定（`base: '/portfolio'`）が有効なため、デフォルトでは `http://localhost:4321/portfolio/` でプレビューを確認できます。
 
 ### 3. 型チェック・本番用静的サイトのビルド
 

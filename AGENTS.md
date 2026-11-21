@@ -45,8 +45,8 @@
 
 ### 2.1 基本構成
 - **技術スタック**: Astro / TypeScript / Tailwind CSS
-- **静的サイト出力**: GitHub Pages（`https://taniguchi-46.github.io/taniguchi-46portfolio.github.io/`）でのサブパス公開を前提とし、SSR（サーバーサイドレンダリング）に依存しない静的ビルド構成（Static Output）を維持すること。
-- **サブパス（`base`）への配慮**: `astro.config.mjs` に `base: '/taniguchi-46portfolio.github.io'` を設定しているため、ページ間リンクや `public/` 配下の静的アセット参照では `import.meta.env.BASE_URL` を用いてリンク切れを防ぐこと。
+- **静的サイト出力**: GitHub Pages（`https://taniguchi-46.github.io/portfolio/`）でのサブパス公開を前提とし、SSR（サーバーサイドレンダリング）に依存しない静的ビルド構成（Static Output）を維持すること。
+- **サブパス（`base`）への配慮**: `astro.config.mjs` に `base: '/portfolio'` を設定しているため、ページ間リンクや `public/` 配下の静的アセット参照では `import.meta.env.BASE_URL` を用いてリンク切れを防ぐこと。
 
 ### 2.2 軽量・高速構成の維持
 - **重い外部アニメーションライブラリの禁止**: `Framer Motion`、`GSAP`、`Lottie` などの外部アニメーションライブラリは導入しないこと。
@@ -99,7 +99,7 @@ src/
   - 就活用メール: `m46.taniguchi@gmail.com`
   - 学校用メール: `2510025@i-seifu.jp`
 - **GitHub**: `https://github.com/taniguchi-46`
-- **公開URL**: `https://taniguchi-46.github.io/taniguchi-46portfolio.github.io/`
+- **公開URL**: `https://taniguchi-46.github.io/portfolio/`
 
 ---
 
