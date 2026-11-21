@@ -1,6 +1,6 @@
 ---
-// 所属・学習内容セクション（装飾的なゲージを使わず、端正な定義リストで記述）
-import { LEARNING_TOPICS } from '../data/portfolio';
+// 所属・学習内容・技術領域サマリーセクション（装飾ゲージを使わず、端正な定義リストで構成）
+import { LEARNING_TOPICS, TECH_SUMMARY } from '../data/portfolio';
 ---
 
 <section id="about" aria-labelledby="about-heading" class="mx-auto max-w-[1400px] px-6 sm:px-10 lg:px-10 xl:px-14">
@@ -35,6 +35,32 @@ import { LEARNING_TOPICS } from '../data/portfolio';
             ))
           }
         </dl>
+
+        <div class="mt-14 border-t border-line pt-12">
+          <h3 class="font-serif text-lg tracking-[0.06em] text-ink sm:text-xl">
+            技術領域
+          </h3>
+
+          <dl class="mt-6 divide-y divide-line">
+            {
+              TECH_SUMMARY.map((row, index) => (
+                <div
+                  class:list={[
+                    'grid grid-cols-1 gap-y-1.5 sm:grid-cols-12 sm:gap-x-6',
+                    index === 0 ? 'pb-5' : index === TECH_SUMMARY.length - 1 ? 'pt-5' : 'py-5',
+                  ]}
+                >
+                  <dt class="text-xs tracking-[0.06em] text-ink/70 sm:col-span-4 sm:pt-0.5">
+                    {row.category}
+                  </dt>
+                  <dd class="text-sm leading-relaxed text-ink sm:col-span-8 sm:text-[0.95rem]">
+                    {row.items}
+                  </dd>
+                </div>
+              ))
+            }
+          </dl>
+        </div>
       </div>
     </div>
   </div>

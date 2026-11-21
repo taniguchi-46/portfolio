@@ -79,6 +79,8 @@ src/
 
 - **名前**: 谷口 瑞季（taniguchi mizuki）
 - **所属**: 清風情報工科学院 デザインコンピュータ学科 IT・情報処理専攻 システムエンジニアコース ２年
+- **卒業予定**: 2028年卒業予定
+- **志望領域**: SE / インフラエンジニア / 開発エンジニア
 - **学習内容**: Java、LinuxなどのIT基礎分野、基本情報技術者試験の学習、システム開発基礎
 - **所持資格**:
   - 基本情報技術者試験
@@ -89,7 +91,7 @@ src/
   1. **`kokomane`**（進級制作）: 若年層向けメンタルヘルスケアアプリ（iOS / Android）※現在プライベートリポジトリのため仮概要を掲載（正式化は `TASK.md` で管理）
   2. **`AtlasNote`**（個人開発）: 思考を整理するためのローカルファーストな知識管理・ノートアプリ
      - GitHub: `https://github.com/taniguchi-46/AtlasNote`（※現在プライベートリポジトリ）
-     - 技術スタック: Wails / Go / Vue 3 / TypeScript / Vite / UnoCSS / Reka UI / Composables + Pinia / SQLite（Repository + Squirrel） / Markdown + Tiptap / WebDAV / OS Credential Store 経由の AI 利用
+     - 技術スタック: Wails / Go / Vue 3 / TypeScript / Vite / UnoCSS / Reka UI / Composables + Pinia / SQLite（Repository + Squirrel） / Markdown + Tiptap / WebDAV（資格情報は OS Credential Store 分離） / 外部 CLI・MCP 連携
   3. **`BoreasTable`**（個人開発）: 大量の Web リンクを気軽に保存し、あとから整理・消化する Web コンテンツ管理ツール（Web App / Chrome Extension）
      - GitHub: `https://github.com/taniguchi-46/BoreasTable`（※現在プライベートリポジトリ）
      - 採用技術: Vue 3 / TypeScript / Vite / shadcn-vue / Reka UI / Tailwind CSS / Pinia / TanStack Vue Query / VueUse / WXT / Go / Gin / PostgreSQL (Neon) / pgx/v5 / sqlc / goquery / Cloudflare Workers / Google Cloud Run / Clerk

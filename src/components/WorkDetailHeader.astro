@@ -1,5 +1,5 @@
 ---
-// 制作物紹介ページのヘッダー部（戻る導線・作品タイトル・メタ情報・大判イメージ画像）
+// 制作物紹介ページのヘッダー部（戻る導線・作品タイトル・メタ情報・公式/GitHubリンク・大判イメージ画像）
 import type { WorkItem } from '../data/portfolio';
 import ArrowIcon from './ArrowIcon.astro';
 import ExternalLinkIcon from './ExternalLinkIcon.astro';
@@ -10,6 +10,7 @@ interface Props {
 
 const { work } = Astro.props;
 const baseUrl = import.meta.env.BASE_URL.replace(/\/$/, '');
+const hasLinks = Boolean(work.officialUrl || work.repositoryUrl);
 ---
 
 <header class="mx-auto max-w-[1400px] px-6 pt-12 pb-16 sm:px-10 sm:pt-16 sm:pb-24 lg:px-10 xl:px-14">
@@ -45,21 +46,37 @@ const baseUrl = import.meta.env.BASE_URL.replace(/\/$/, '');
 
       <div aria-hidden="true" class="editorial-rule mt-8 h-px w-16 bg-ink/20"></div>
 
-      {work.repositoryUrl && (
-        <div class="mt-8">
-          <a
-            href={work.repositoryUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            class="editorial-link text-sm sm:text-[0.95rem]"
-          >
-            <span>
-              {work.isPrivateRepository
-                ? 'GitHub リポジトリ（非公開）'
-                : 'GitHub リポジトリ'}
-            </span>
-            <ExternalLinkIcon />
-          </a>
+      {hasLinks && (
+        <div class="mt-8 flex flex-wrap items-center gap-x-8 gap-y-4">
+          {work.officialUrl && (
+            <a
+              href={work.officialUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="editorial-link text-sm sm:text-[0.95rem]"
+            >
+              <span>
+                {work.isPlaceholderOfficialUrl ? '公式ページ（仮）' : '公式ページ'}
+              </span>
+              <ExternalLinkIcon />
+            </a>
+          )}
+
+          {work.repositoryUrl && (
+            <a
+              href={work.repositoryUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="editorial-link text-sm sm:text-[0.95rem]"
+            >
+              <span>
+                {work.isPrivateRepository
+                  ? 'GitHub リポジトリ（非公開）'
+                  : 'GitHub リポジトリ'}
+              </span>
+              <ExternalLinkIcon />
+            </a>
+          )}
         </div>
       )}
     </div>

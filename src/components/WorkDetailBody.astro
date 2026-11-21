@@ -1,5 +1,5 @@
 ---
-// 制作物紹介ページの本文セクション（概要・特徴/基本方針・カテゴリ別技術構成・他作品リンク）
+// 制作物紹介ページの本文セクション（概要・特徴/設計判断・カテゴリ別技術構成・他作品リンク）
 import type { WorkItem } from '../data/portfolio';
 import ArrowIcon from './ArrowIcon.astro';
 
@@ -10,6 +10,26 @@ interface Props {
 
 const { work, otherWorks } = Astro.props;
 const baseUrl = import.meta.env.BASE_URL.replace(/\/$/, '');
+
+// 「主な特徴／基本方針」と「設計判断」の共通セクション構造へ正規化
+const narrativeSections = [
+  {
+    headingId: 'detail-highlights-heading',
+    title: work.highlightsHeading ?? '特徴',
+    entries: (work.highlights ?? []).map((item) => ({
+      heading: item.title,
+      body: item.description,
+    })),
+  },
+  {
+    headingId: 'detail-decisions-heading',
+    title: '設計判断',
+    entries: (work.decisions ?? []).map((item) => ({
+      heading: item.title,
+      body: item.rationale,
+    })),
+  },
+].filter((section) => section.entries.length > 0);
 ---
 
 <!-- 概要 -->
@@ -44,49 +64,51 @@ const baseUrl = import.meta.env.BASE_URL.replace(/\/$/, '');
   </div>
 </section>
 
-<!-- 主な特徴・基本方針・今後の掲載予定 -->
-{work.highlights && work.highlights.length > 0 && (
-  <section aria-labelledby="detail-highlights-heading" class="mx-auto max-w-[1400px] px-6 sm:px-10 lg:px-10 xl:px-14">
-    <div class="border-t border-line py-16 sm:py-24">
-      <div class="grid grid-cols-1 gap-y-8 md:grid-cols-12 md:gap-x-12">
-        <div class="md:col-span-4">
-          <h2
-            id="detail-highlights-heading"
-            class="font-serif text-xl tracking-[0.08em] text-ink sm:text-2xl"
-          >
-            {work.highlightsHeading ?? '特徴'}
-          </h2>
-        </div>
+<!-- 主な特徴・基本方針・設計判断 -->
+{
+  narrativeSections.map((section) => (
+    <section aria-labelledby={section.headingId} class="mx-auto max-w-[1400px] px-6 sm:px-10 lg:px-10 xl:px-14">
+      <div class="border-t border-line py-16 sm:py-24">
+        <div class="grid grid-cols-1 gap-y-8 md:grid-cols-12 md:gap-x-12">
+          <div class="md:col-span-4">
+            <h2
+              id={section.headingId}
+              class="font-serif text-xl tracking-[0.08em] text-ink sm:text-2xl"
+            >
+              {section.title}
+            </h2>
+          </div>
 
-        <div class="max-w-3xl md:col-span-8">
-          <ol class="divide-y divide-line">
-            {
-              work.highlights.map((item, index) => (
-                <li
-                  class:list={[
-                    'space-y-2',
-                    index === 0
-                      ? 'pb-7'
-                      : index === work.highlights!.length - 1
-                        ? 'pt-7'
-                        : 'py-7',
-                  ]}
-                >
-                  <h3 class="font-serif text-lg leading-snug tracking-[0.04em] text-ink sm:text-xl">
-                    {item.title}
-                  </h3>
-                  <p class="text-sm leading-[1.9] text-ink/85 sm:text-[0.95rem]">
-                    {item.description}
-                  </p>
-                </li>
-              ))
-            }
-          </ol>
+          <div class="max-w-3xl md:col-span-8">
+            <ol class="divide-y divide-line">
+              {
+                section.entries.map((entry, index) => (
+                  <li
+                    class:list={[
+                      'space-y-2',
+                      index === 0
+                        ? 'pb-7'
+                        : index === section.entries.length - 1
+                          ? 'pt-7'
+                          : 'py-7',
+                    ]}
+                  >
+                    <h3 class="font-serif text-lg leading-snug tracking-[0.04em] text-ink sm:text-xl">
+                      {entry.heading}
+                    </h3>
+                    <p class="text-sm leading-[1.9] text-ink/85 sm:text-[0.95rem]">
+                      {entry.body}
+                    </p>
+                  </li>
+                ))
+              }
+            </ol>
+          </div>
         </div>
       </div>
-    </div>
-  </section>
-)}
+    </section>
+  ))
+}
 
 <!-- 技術構成（カテゴリ別定義リスト） -->
 {work.techTable && work.techTable.length > 0 && (

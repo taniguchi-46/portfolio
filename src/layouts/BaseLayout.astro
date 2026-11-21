@@ -1,5 +1,5 @@
 ---
-// 全ページ共通レイアウト（HTML骨格・フォント読み込み・左側ハンバーガーメニュー・フッター枠組み）
+// 全ページ共通レイアウト（HTML骨格・OGPメタタグ・フォント読み込み・左側ハンバーガーメニュー・フッター枠組み）
 import '../styles/global.css';
 import SideNavigation from '../components/SideNavigation.astro';
 import Footer from '../components/Footer.astro';
@@ -7,15 +7,21 @@ import Footer from '../components/Footer.astro';
 interface Props {
   title?: string;
   description?: string;
+  ogImage?: string;
 }
 
 const {
   title = '谷口 瑞季 | Portfolio',
   description = '清風情報工科学院 谷口 瑞季（taniguchi mizuki）のポートフォリオサイトです。制作物（kokomane、AtlasNote、BoreasTable）、学習内容、所持資格、連絡先を掲載しています。',
+  ogImage = '/og-image.png',
 } = Astro.props;
 
-// サブパス公開時の静的アセットパス解決用にベースURLを正規化
+// サブパス公開時の静的アセットパス・OGP絶対URL解決用にベースURLを正規化
 const baseUrl = import.meta.env.BASE_URL.replace(/\/$/, '');
+const siteOrigin = Astro.site ? Astro.site.origin : 'https://taniguchi-46.github.io';
+const canonicalUrl = Astro.site ? new URL(Astro.url.pathname, Astro.site).toString() : undefined;
+const normalizedOgPath = ogImage.startsWith('/') ? ogImage : `/${ogImage}`;
+const ogImageUrl = `${siteOrigin}${baseUrl}${normalizedOgPath}`;
 ---
 
 <!doctype html>
@@ -27,6 +33,22 @@ const baseUrl = import.meta.env.BASE_URL.replace(/\/$/, '');
     <meta name="generator" content={Astro.generator} />
     <meta name="theme-color" content="#F7F6F2" />
     <link rel="icon" type="image/svg+xml" href={`${baseUrl}/favicon.svg`} />
+    {canonicalUrl && <link rel="canonical" href={canonicalUrl} />}
+
+    <!-- OGP / SNS シェア設定 -->
+    <meta property="og:site_name" content="谷口 瑞季 | Portfolio" />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="ja_JP" />
+    {canonicalUrl && <meta property="og:url" content={canonicalUrl} />}
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={ogImageUrl} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImageUrl} />
 
     <!-- Google Fonts: 見出し用 Shippori Mincho（本文・UIはブラウザ標準のプレーンなデフォルトを使用） -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />

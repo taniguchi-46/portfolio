@@ -1,5 +1,5 @@
 ---
-// 扉セクション（氏名・所属・主要導線のみを余白の中に静かに配置）
+// 扉セクション（氏名・所属・卒業予定・短い自己紹介文・主要導線を余白の中に静かに配置）
 import { PROFILE } from '../data/portfolio';
 import ExternalLinkIcon from './ExternalLinkIcon.astro';
 ---
@@ -20,11 +20,15 @@ import ExternalLinkIcon from './ExternalLinkIcon.astro';
 
       <div aria-hidden="true" class="editorial-rule mt-10 h-px w-16 bg-ink/20"></div>
 
-      <p class="mt-10 max-w-[36rem] text-sm leading-[2] text-ink/90 sm:text-base">
+      <p class="mt-10 max-w-[38rem] text-sm leading-[2] text-ink/90 sm:text-base">
         <span class="block">{PROFILE.school}</span>
         <span class="block">{PROFILE.department}</span>
-        <span class="block">{PROFILE.course}</span>
+        <span class="block">{PROFILE.course}（{PROFILE.graduation}）</span>
       </p>
+
+      <div class="mt-7 max-w-[38rem] space-y-3 text-sm leading-[1.95] text-ink/80 sm:text-[0.95rem]">
+        {PROFILE.bio.map((line) => <p>{line}</p>)}
+      </div>
 
       <div class="mt-10 flex flex-wrap items-center gap-x-8 gap-y-4 text-sm">
         <a href="#works" class="editorial-link">
