@@ -36,8 +36,8 @@
   - [x] 「学習と取り組み」セクション（`AboutSection.astro`）に、言語・フロントエンド・バックエンド/DB・環境ツールの全体像を定義リストで整理する
 - [x] **卒業予定時期・志望領域の追記**
   - [x] 所属・プロフィール欄に `2028年卒業予定` および志望領域（`SE / インフラエンジニア / 開発エンジニア`）を記載する
-- [ ] **GitHub Pages デプロイ確認**
-  - [ ] GitHub リポジトリ設定（Settings → Pages → Source: GitHub Actions）を有効化し、`main` ブランチへの push 後に公開 URL での全ページ表示・サブパスリンク・画像読み込みを確認する
+- [x] **GitHub Pages デプロイ確認**
+  - [x] GitHub リポジトリ設定（Settings → Pages → Source: GitHub Actions）を有効化し、`main` ブランチへの push 後に公開 URL での全ページ表示・サブパスリンク・画像読み込みを確認する
 
 ---
 
