@@ -42,6 +42,8 @@ export interface WorkItem {
   decisions?: WorkDecision[];
   keyTechnologies?: string[];
   techTable?: WorkTechRow[];
+  iconSrc?: string;
+  iconAlt?: string;
   imageSrc: string;
   imageAlt: string;
   imageCaption?: string;
@@ -158,6 +160,8 @@ export const WORKS: WorkItem[] = [
       { category: 'Sync', value: 'WebDAV（資格情報は OS Credential Store へ分離）' },
       { category: 'AI / 連携', value: '外部 CLI・MCP 連携 / Multi・Split Terminal（API キーはアプリ側非保持）' },
     ],
+    iconSrc: '/images/atlasnote-icon.png',
+    iconAlt: 'AtlasNote のアプリアイコン',
     imageSrc: '/images/atlasnote-main.png',
     imageAlt: 'AtlasNote のメイン画面（左サイドバーのノート一覧とリッチテキストエディタ）',
     isDemoImage: false,
