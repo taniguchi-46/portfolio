@@ -1,0 +1,23 @@
+---
+// 線幅と形状を ExternalLinkIcon と統一したダウンロード用ミニマル SVG アイコン
+interface Props {
+  class?: string;
+}
+
+const { class: className = 'h-3.5 w-3.5' } = Astro.props;
+---
+
+<svg
+  viewBox="0 0 16 16"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="1.25"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  aria-hidden="true"
+  class={className}
+>
+  <path d="M8 2.75V10.25" />
+  <path d="M5 7.5L8 10.5L11 7.5" />
+  <path d="M3 12.75H13" />
+</svg>

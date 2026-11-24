@@ -1,5 +1,5 @@
 ---
-// 制作物紹介ページの本文セクション（概要・特徴/設計判断・カテゴリ別技術構成・他作品リンク）
+// 制作物紹介ページの本文セクション（概要・画面イメージ・特徴/設計判断・カテゴリ別技術構成・他作品リンク）
 import type { WorkItem } from '../data/portfolio';
 import ArrowIcon from './ArrowIcon.astro';
 
@@ -63,6 +63,44 @@ const narrativeSections = [
     </div>
   </div>
 </section>
+
+<!-- 画面イメージ（実画面ギャラリー） -->
+{work.gallery && work.gallery.length > 0 && (
+  <section aria-labelledby="detail-gallery-heading" class="mx-auto max-w-[1400px] px-6 sm:px-10 lg:px-10 xl:px-14">
+    <div class="border-t border-line py-16 sm:py-24">
+      <div class="grid grid-cols-1 gap-y-8 md:grid-cols-12 md:gap-x-12">
+        <div class="md:col-span-4">
+          <h2
+            id="detail-gallery-heading"
+            class="font-serif text-xl tracking-[0.08em] text-ink sm:text-2xl"
+          >
+            画面イメージ
+          </h2>
+        </div>
+
+        <div class="max-w-3xl space-y-12 md:col-span-8">
+          {
+            work.gallery.map((item) => (
+              <figure>
+                <div class="aspect-[16/10] overflow-hidden border border-line bg-base">
+                  <img
+                    src={`${baseUrl}${item.src}`}
+                    alt={item.alt}
+                    decoding="async"
+                    class="h-full w-full object-cover object-top"
+                  />
+                </div>
+                <figcaption class="mt-3 text-xs leading-relaxed tracking-[0.04em] text-ink/70 sm:text-sm">
+                  {item.caption}
+                </figcaption>
+              </figure>
+            ))
+          }
+        </div>
+      </div>
+    </div>
+  </section>
+)}
 
 <!-- 主な特徴・基本方針・設計判断 -->
 {

@@ -81,20 +81,20 @@ src/
 - **所属**: 清風情報工科学院 デザインコンピュータ学科 IT・情報処理専攻 システムエンジニアコース ２年
 - **卒業予定**: 2028年卒業予定
 - **志望領域**: SE / インフラエンジニア / 開発エンジニア
-- **学習内容**: Java、LinuxなどのIT基礎分野、基本情報技術者試験の学習、システム開発基礎
+- **学習内容**: Java、LinuxなどのIT基礎分野、基本情報技術者試験（取得済み）を土台としたアルゴリズム・ネットワーク・DBの学習、システム開発基礎
 - **所持資格**:
   - 基本情報技術者試験
   - ITパスポート
   - MOS アソシエイト
   - 普通自動二輪（AT小型限定）
 - **制作物**:
-  1. **`kokomane`**（進級制作）: 若年層向けメンタルヘルスケアアプリ（iOS / Android）※現在プライベートリポジトリのため仮概要を掲載（正式化は `TASK.md` で管理）
-  2. **`AtlasNote`**（個人開発）: 思考を整理するためのローカルファーストな知識管理・ノートアプリ
-     - GitHub: `https://github.com/taniguchi-46/AtlasNote`（※現在プライベートリポジトリ）
-     - 技術スタック: Wails / Go / Vue 3 / TypeScript / Vite / UnoCSS / Reka UI / Composables + Pinia / SQLite（Repository + Squirrel） / Markdown + Tiptap / WebDAV（資格情報は OS Credential Store 分離） / 外部 CLI・MCP 連携
-  3. **`BoreasTable`**（個人開発）: 大量の Web リンクを気軽に保存し、あとから整理・消化する Web コンテンツ管理ツール（Web App / Chrome Extension）
-     - GitHub: `https://github.com/taniguchi-46/BoreasTable`（※現在プライベートリポジトリ）
+  1. **`AtlasNote`**（個人開発・正式掲載済み）: 思考を整理するためのローカルファーストな知識管理・ノートアプリ（Windows Desktop App / インストーラ配布あり）
+     - 技術スタック: Wails / Go / Vue 3 / TypeScript / Vite / UnoCSS / Reka UI / Composables + Pinia / SQLite（Repository + Squirrel） / Markdown + Tiptap / WebDAV（資格情報は OS Credential Store 分離） / 外部 CLI・MCP 連携・Multi / Split Terminal
+     - 公開状態: ソースコード・リポジトリは非公開（Windows x64 インストーラを `portfolio` リポジトリの GitHub Releases で配布）
+  2. **`BoreasTable`**（個人開発・設計・開発準備中）: 大量の Web リンクを気軽に保存し、あとから整理・消化する Web コンテンツ管理ツール（Web App / Chrome Extension）
      - 採用技術: Vue 3 / TypeScript / Vite / shadcn-vue / Reka UI / Tailwind CSS / Pinia / TanStack Vue Query / VueUse / WXT / Go / Gin / PostgreSQL (Neon) / pgx/v5 / sqlc / goquery / Cloudflare Workers / Google Cloud Run / Clerk
+     - 公開状態: リポジトリ非公開
+  3. **`kokomane`**（進級制作・制作中）: 若年層向けメンタルヘルスケアアプリ（iOS / Android）※現在制作中のため簡潔な概要とコンセプトイメージのみ掲載・リポジトリ非公開（正式化は `TASK.md` で管理）
 - **連絡先**:
   - 就活用メール: `m46.taniguchi@gmail.com`
   - 学校用メール: `2510025@i-seifu.jp`

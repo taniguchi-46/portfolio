@@ -1,7 +1,8 @@
 ---
-// 制作物紹介ページのヘッダー部（戻る導線・作品タイトル・メタ情報・公式/GitHubリンク・大判イメージ画像）
+// 制作物紹介ページのヘッダー部（戻る導線・作品タイトル・メタ情報・ダウンロード/外部リンク・大判イメージ画像）
 import type { WorkItem } from '../data/portfolio';
 import ArrowIcon from './ArrowIcon.astro';
+import DownloadIcon from './DownloadIcon.astro';
 import ExternalLinkIcon from './ExternalLinkIcon.astro';
 
 interface Props {
@@ -10,7 +11,8 @@ interface Props {
 
 const { work } = Astro.props;
 const baseUrl = import.meta.env.BASE_URL.replace(/\/$/, '');
-const hasLinks = Boolean(work.officialUrl || work.repositoryUrl);
+const caption = work.imageCaption ?? (work.isDemoImage ? 'イメージ（仮）' : undefined);
+const hasActions = Boolean(work.download || work.officialUrl || work.repositoryUrl || work.repositoryNote);
 ---
 
 <header class="mx-auto max-w-[1400px] px-6 pt-12 pb-16 sm:px-10 sm:pt-16 sm:pb-24 lg:px-10 xl:px-14">
@@ -46,36 +48,64 @@ const hasLinks = Boolean(work.officialUrl || work.repositoryUrl);
 
       <div aria-hidden="true" class="editorial-rule mt-8 h-px w-16 bg-ink/20"></div>
 
-      {hasLinks && (
-        <div class="mt-8 flex flex-wrap items-center gap-x-8 gap-y-4">
-          {work.officialUrl && (
-            <a
-              href={work.officialUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              class="editorial-link text-sm sm:text-[0.95rem]"
-            >
-              <span>
-                {work.isPlaceholderOfficialUrl ? '公式ページ（仮）' : '公式ページ'}
-              </span>
-              <ExternalLinkIcon />
-            </a>
+      {hasActions && (
+        <div class="mt-8 space-y-4">
+          {(work.download || work.officialUrl || work.repositoryUrl) && (
+            <div class="flex flex-wrap items-center gap-x-8 gap-y-4">
+              {work.download && (
+                <a
+                  href={work.download.url}
+                  download
+                  class="editorial-link text-sm sm:text-[0.95rem]"
+                >
+                  <span>{work.download.label}</span>
+                  <DownloadIcon />
+                </a>
+              )}
+
+              {work.officialUrl && (
+                <a
+                  href={work.officialUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="editorial-link text-sm sm:text-[0.95rem]"
+                >
+                  <span>
+                    {work.isPlaceholderOfficialUrl ? '公式ページ（仮）' : '公式ページ'}
+                  </span>
+                  <ExternalLinkIcon />
+                </a>
+              )}
+
+              {work.repositoryUrl && (
+                <a
+                  href={work.repositoryUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="editorial-link text-sm sm:text-[0.95rem]"
+                >
+                  <span>
+                    {work.isPrivateRepository
+                      ? 'GitHub リポジトリ（非公開）'
+                      : 'GitHub リポジトリ'}
+                  </span>
+                  <ExternalLinkIcon />
+                </a>
+              )}
+            </div>
           )}
 
-          {work.repositoryUrl && (
-            <a
-              href={work.repositoryUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              class="editorial-link text-sm sm:text-[0.95rem]"
-            >
-              <span>
-                {work.isPrivateRepository
-                  ? 'GitHub リポジトリ（非公開）'
-                  : 'GitHub リポジトリ'}
-              </span>
-              <ExternalLinkIcon />
-            </a>
+          {work.download && (
+            <div class="space-y-1 text-xs leading-relaxed text-ink/70">
+              <p class="tabular-nums">{work.download.meta}</p>
+              <p>{work.download.notice}</p>
+            </div>
+          )}
+
+          {work.repositoryNote && (
+            <p class="text-xs leading-relaxed text-ink/70">
+              {work.repositoryNote}
+            </p>
           )}
         </div>
       )}
@@ -89,12 +119,12 @@ const hasLinks = Boolean(work.officialUrl || work.repositoryUrl);
           src={`${baseUrl}${work.imageSrc}`}
           alt={work.imageAlt}
           decoding="async"
-          class="h-full w-full object-cover"
+          class="h-full w-full object-cover object-top"
         />
       </div>
-      {work.isDemoImage && (
+      {caption && (
         <figcaption class="mt-2.5 text-right text-xs tracking-[0.06em] text-muted">
-          イメージ（仮）
+          {caption}
         </figcaption>
       )}
     </div>

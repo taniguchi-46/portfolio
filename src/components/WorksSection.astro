@@ -20,6 +20,7 @@ const baseUrl = import.meta.env.BASE_URL.replace(/\/$/, '');
       {
         WORKS.map((work) => {
           const detailUrl = `${baseUrl}/works/${work.slug}/`;
+          const caption = work.imageCaption ?? (work.isDemoImage ? 'イメージ（仮）' : undefined);
           return (
             <li class="flex flex-col">
               <article class="flex h-full flex-col">
@@ -33,12 +34,12 @@ const baseUrl = import.meta.env.BASE_URL.replace(/\/$/, '');
                       alt={work.imageAlt}
                       loading="lazy"
                       decoding="async"
-                      class="h-full w-full object-cover"
+                      class="h-full w-full object-cover object-top"
                     />
                   </a>
-                  {work.isDemoImage && (
+                  {caption && (
                     <figcaption class="mt-2 text-right text-xs tracking-[0.06em] text-muted">
-                      イメージ（仮）
+                      {caption}
                     </figcaption>
                   )}
                 </figure>
@@ -68,9 +69,9 @@ const baseUrl = import.meta.env.BASE_URL.replace(/\/$/, '');
                     {work.keyTechnologies.join(' / ')}
                   </p>
                 ) : (
-                  work.note && (
-                    <p class="mt-5 border-t border-line/80 pt-4 text-xs leading-relaxed text-ink/70 sm:text-[0.8125rem]">
-                      {work.note}
+                  work.status && (
+                    <p class="mt-5 border-t border-line/80 pt-4 text-xs leading-relaxed tracking-[0.04em] text-ink/70 sm:text-[0.8125rem]">
+                      {work.category}・{work.status}
                     </p>
                   )
                 )}

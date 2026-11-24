@@ -16,6 +16,19 @@ export interface WorkDecision {
   rationale: string;
 }
 
+export interface WorkGalleryItem {
+  src: string;
+  alt: string;
+  caption: string;
+}
+
+export interface WorkDownload {
+  label: string;
+  url: string;
+  meta: string;
+  notice: string;
+}
+
 export interface WorkItem {
   slug: string;
   title: string;
@@ -31,11 +44,15 @@ export interface WorkItem {
   techTable?: WorkTechRow[];
   imageSrc: string;
   imageAlt: string;
+  imageCaption?: string;
   isDemoImage?: boolean;
+  gallery?: WorkGalleryItem[];
+  download?: WorkDownload;
   officialUrl?: string;
   isPlaceholderOfficialUrl?: boolean;
   repositoryUrl?: string;
   isPrivateRepository?: boolean;
+  repositoryNote?: string;
   note?: string;
 }
 
@@ -65,59 +82,24 @@ export const PROFILE = {
   graduation: '2028年卒業予定',
   desiredRoles: 'SE / インフラエンジニア / 開発エンジニア',
   bio: [
-    '専門学校で IT 基礎とシステム開発を学びながら、個人開発で日常の思考整理や情報管理を支えるツールを設計・実装しています。',
-    '要件整理からアーキテクチャ設計・実装まで一貫して考え、シンプルで長く使える道具づくりを目指しています。',
+    '専門学校で Java や Linux などの IT 基礎とシステム開発を学びながら、個人開発で日常の思考整理や情報管理を支えるツールを設計・実装しています。',
+    '基本情報技術者試験で培った基礎知識と、要件整理・セキュリティ・運用保守まで見据えた設計姿勢を強みに、SE・インフラエンジニア・開発エンジニアとして長く使われる仕組みづくりを目指しています。',
   ],
   githubUrl: 'https://github.com/taniguchi-46',
 } as const;
 
 export const WORKS: WorkItem[] = [
   {
-    slug: 'kokomane',
-    title: 'kokomane',
-    category: '進級制作',
-    platform: 'iOS / Android',
-    status: '詳細整理中（仮ページ）',
-    summary:
-      '若年層向けのメンタルヘルスケアアプリとして進級制作で開発しています。日々の気分やコンディションに静かに向き合い、無理なく記録と振り返りを続けられる体験を目指しています。',
-    detailParagraphs: [
-      '清風情報工科学院の進級制作として取り組んでいる、若年層向けのメンタルヘルスケアアプリ（iOS / Android）です。',
-      '日々の気分や心の状態にそっと向き合い、負担なく記録と振り返りを続けられる体験を目指して設計・制作を進めています。',
-    ],
-    highlightsHeading: '今後の掲載予定',
-    highlights: [
-      {
-        title: '機能概要と設計意図',
-        description:
-          '解決したい課題の整理、主要画面の構成、日々の記録・振り返り体験の詳細を正式文として追記予定です。',
-      },
-      {
-        title: '使用技術と担当範囲',
-        description:
-          '採用している技術スタック・開発環境および、進級制作における担当領域を整理して掲載します。',
-      },
-      {
-        title: '画面イメージの正式化',
-        description:
-          '現在掲載しているデモイメージ画像を、実アプリの画面スクリーンショットへ差し替える予定です。',
-      },
-    ],
-    imageSrc: '/images/kokomane-demo.jpg',
-    imageAlt: 'kokomane のデモイメージ画像（スマートフォン画面のミニマルなコンセプト図）',
-    isDemoImage: true,
-    isPrivateRepository: true,
-    note: '※ 仮の概要・デモ画像を掲載しています（リポジトリ非公開）。詳細は正式化にあわせて更新予定です。',
-  },
-  {
     slug: 'atlasnote',
     title: 'AtlasNote',
     category: '個人開発',
-    platform: 'Desktop App',
+    platform: 'Desktop App (Windows)',
     summary:
       '思考を整理するためのローカルファーストな知識管理・ノートアプリ。Markdown を本文の正本、SQLite をメタデータと検索索引として管理し、WebDAV 同期や外部 CLI / MCP・統合ターミナル連携を備えています。',
     detailParagraphs: [
       'AI の活用を前提としたローカルファーストの知識管理・Second Brain デスクトップアプリです。思考を日々蓄積し、あとから自在に検索・整理・再構築できる個人用ワークスペースとして開発しています。',
-      'ノート本文の正本はプレーンな Markdown ファイルとして手元に保持し、SQLite でメタデータや検索索引を管理する構成とすることで、データの可搬性と軽快な操作感を両立させています。',
+      'ノート本文の正本はプレーンな Markdown ファイルとして手元に保持し、SQLite でメタデータや検索索引を管理する構成とすることで、データの可搬性と軽快な操作感を両立させています。リッチテキスト表示と Markdown 編集を自在に切り替えられるほか、添付画像（PNG/JPEG）や表の編集、ライト・ダーク・セピアなど 6 種類のテーマに対応しています。',
+      '自動保存やノート切替・削除時の変更確認、競合保護、復元前の安全用バックアップといったデータ保護の仕組みを丁寧に取り入れ、日常的に安心して使い続けられる実用性を重視しました。',
     ],
     highlightsHeading: '主な特徴',
     highlights: [
@@ -127,19 +109,19 @@ export const WORKS: WorkItem[] = [
           '本文は Markdown ファイルとしてローカルに保存し、メタデータや検索索引を SQLite（Repository + Squirrel）で管理する堅実なデータアクセス構成を採っています。',
       },
       {
-        title: '日常の蓄積を支える整理・同期機能',
+        title: '快適な執筆体験と 6 種類のテーマ',
         description:
-          'ノート整理、検索、タグ管理、WebDAV による同期、バックアップ機能を備え、継続的な知識管理をローカル中心で完結できます。',
+          'Markdown textarea と Tiptap によるリッチテキスト表示をワンクリックで切り替え可能。見出し・表・コードブロック・チェックリストや画像のドラッグ＆ドロップ添付、6 種類の配色テーマ（ライト／ダーク／セピア／フォレスト／ミッドナイト／バーガンディ）を備えています。',
       },
       {
-        title: 'Wails による Go × Vue 3 デスクトップ構成',
+        title: 'データ保護・同期・安全性を重視した運用設計',
         description:
-          'Go バックエンドと Vue 3 + TypeScript（Vite / UnoCSS / Reka UI / Pinia）のフロントエンドを Wails で接続し、Markdown textarea と Tiptap による編集環境を構築しています。',
+          '自動保存と下書き保持に加え、編集中の誤削除・上書きを防ぐ変更確認と競合保護、WebDAV 同期、復元前の安全用バックアップ、秘密情報を含まない診断ログ出力を実装しています。',
       },
       {
-        title: '外部 CLI / MCP 連携と統合ターミナル',
+        title: '外部 CLI / MCP 連携と Multi / Split Terminal',
         description:
-          '外部 CLI や MCP と連携できる統合ターミナル（Multi Terminal・左右 Split）を備え、認証情報をアプリ側へ抱え込まない安全な運用を重視しています。',
+          '外部 CLI や MCP と連携できる統合ターミナル（複数セッション切替・左右分割の Multi / Split 表示）を備え、認証情報をアプリ側へ抱え込まない安全なワークフローを実現しています。',
       },
     ],
     decisions: [
@@ -174,27 +156,44 @@ export const WORKS: WorkItem[] = [
       { category: 'Editor', value: 'Markdown textarea + Tiptap' },
       { category: 'Storage', value: 'Markdown' },
       { category: 'Sync', value: 'WebDAV（資格情報は OS Credential Store へ分離）' },
-      { category: 'AI / 連携', value: '外部 CLI・MCP 連携 / 統合ターミナル（API キーはアプリ側非保持）' },
+      { category: 'AI / 連携', value: '外部 CLI・MCP 連携 / Multi・Split Terminal（API キーはアプリ側非保持）' },
     ],
-    imageSrc: '/images/atlasnote-demo.jpg',
-    imageAlt: 'AtlasNote のデモイメージ画像（2ペイン構成のノートと知識グラフのコンセプト図）',
-    isDemoImage: true,
-    officialUrl: 'https://example.com/atlasnote',
-    isPlaceholderOfficialUrl: true,
-    repositoryUrl: 'https://github.com/taniguchi-46/AtlasNote',
+    imageSrc: '/images/atlasnote-main.png',
+    imageAlt: 'AtlasNote のメイン画面（左サイドバーのノート一覧とリッチテキストエディタ）',
+    isDemoImage: false,
+    gallery: [
+      {
+        src: '/images/atlasnote-markdown.png',
+        alt: 'AtlasNote で Markdown 編集モードへ切り替えた画面',
+        caption: 'Markdown 編集表示への切り替え（正本のプレーンテキスト記法をそのまま編集）',
+      },
+      {
+        src: '/images/atlasnote-theme.png',
+        alt: 'AtlasNote にセピアテーマを適用したワークスペース画面',
+        caption: 'セピアテーマ適用時のワークスペース（全 6 テーマから選択可能）',
+      },
+    ],
+    download: {
+      label: 'Windows インストーラをダウンロード',
+      url: 'https://github.com/taniguchi-46/portfolio/releases/download/atlasnote-v0.1.0/AtlasNote-amd64-installer.exe',
+      meta: 'v0.1.0 / Windows 10・11 (x64) / 約 28.8MB',
+      notice:
+        '※ 個人開発アプリのためコード署名は未付与です（実行時に Windows の確認画面が表示される場合があります）。',
+    },
     isPrivateRepository: true,
+    repositoryNote: 'ソースコード・リポジトリは非公開としています。',
   },
   {
     slug: 'boreastable',
     title: 'BoreasTable',
     category: '個人開発',
     platform: 'Web App / Chrome Extension',
-    status: '設計・開発準備フェーズ',
+    status: '設計・開発準備中',
     summary:
       '大量の Web リンクを気軽に保存し、あとから整理・消化するための Web コンテンツ管理ツール。まず未整理 Inbox へ集め、テーブル上で一覧・整理する構成で Web アプリと Chrome 拡張を設計しています。',
     detailParagraphs: [
       '大量の Web リンクを気軽に保存し、あとから整理・検索・再発見・消化できることを目的とした Web コンテンツ管理ツールです。AtlasNote と同じシリーズとして、ギリシャ神話の北風の神「Boreas」と、集めた情報を広げて整理する場所を表す「Table」から命名しています。',
-      'MVP の主要要件定義と外部設計を採用し、現在は文書整理とローカル開発環境構築を進める開発準備フェーズにあります。Web アプリ本体（SPA）と Chrome 拡張の2系統で設計を進めています。',
+      'MVP の主要要件定義と外部設計を採用し、現在は文書整理とローカル開発環境構築を進める開発準備段階にあります。Web アプリ本体（SPA）と Chrome 拡張の 2 系統で設計を進めています。',
     ],
     highlightsHeading: '基本方針',
     highlights: [
@@ -253,13 +252,31 @@ export const WORKS: WorkItem[] = [
       { category: 'Auth', value: 'Clerk（@clerk/vue / clerk-sdk-go/v2）' },
     ],
     imageSrc: '/images/boreastable-demo.jpg',
-    imageAlt: 'BoreasTable のデモイメージ画像（未整理 Inbox とリンク一覧テーブルのコンセプト図）',
+    imageAlt: 'BoreasTable のコンセプトイメージ画像（未整理 Inbox とリンク一覧テーブルの構成図）',
+    imageCaption: 'コンセプトイメージ',
     isDemoImage: true,
-    officialUrl: 'https://example.com/boreastable',
-    isPlaceholderOfficialUrl: true,
-    repositoryUrl: 'https://github.com/taniguchi-46/BoreasTable',
     isPrivateRepository: true,
-    note: '※ MVP 要件定義・外部設計を採用済みで、現在は開発準備フェーズです（リポジトリ非公開）。初期運用費0円構成を前提に設計しています。',
+    repositoryNote: 'リポジトリは非公開としています。',
+    note: '※ MVP の要件定義・外部設計を採用し、現在は開発準備を進めています。初期運用費を抑えた構成を前提に設計しています。',
+  },
+  {
+    slug: 'kokomane',
+    title: 'kokomane',
+    category: '進級制作',
+    platform: 'iOS / Android',
+    status: '制作中',
+    summary:
+      '若年層向けのメンタルヘルスケアアプリとして進級制作で開発しています。日々の気分やコンディションに静かに向き合い、無理なく記録と振り返りを続けられる体験を目指しています。',
+    detailParagraphs: [
+      '清風情報工科学院の進級制作として取り組んでいる、若年層向けのメンタルヘルスケアアプリ（iOS / Android）です。',
+      '日々の気分や心の状態にそっと向き合い、負担なく記録と振り返りを続けられる体験を目指して設計・制作を進めています。',
+    ],
+    imageSrc: '/images/kokomane-demo.jpg',
+    imageAlt: 'kokomane のコンセプトイメージ画像（スマートフォン画面の構成図）',
+    imageCaption: 'コンセプトイメージ',
+    isDemoImage: true,
+    isPrivateRepository: true,
+    repositoryNote: '進級制作として現在開発中のため、リポジトリは非公開としています。',
   },
 ];
 
@@ -277,8 +294,8 @@ export const LEARNING_TOPICS: LearningTopic[] = [
     detail: 'Java、Linux などの基礎技術',
   },
   {
-    label: '情報処理・資格学習',
-    detail: '基本情報技術者試験の学習',
+    label: '情報処理基礎',
+    detail: '基本情報技術者試験（取得済み）の知識を土台としたアルゴリズム・ネットワーク・DB の学習',
   },
   {
     label: '開発基礎',
