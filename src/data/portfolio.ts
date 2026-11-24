@@ -301,6 +301,11 @@ export const LEARNING_TOPICS: LearningTopic[] = [
     label: '開発基礎',
     detail: 'システム開発基礎',
   },
+  {
+    label: '学習中資格',
+    detail:
+      '情報セキュリティマネジメント試験 / 応用情報技術者試験の後継資格（2027年度再編予定・プロフェッショナルデジタルスキル試験（仮称））',
+  },
 ];
 
 export const TECH_SUMMARY: TechSummaryRow[] = [
