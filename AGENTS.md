@@ -89,7 +89,6 @@ src/
   - 普通自動二輪（AT小型限定）
 - **学習中資格**:
   - 情報セキュリティマネジメント試験
-  - 応用情報技術者試験の後継資格（2027年度再編予定・プロフェッショナルデジタルスキル試験（仮称））
 - **制作物**:
   1. **`AtlasNote`**（個人開発・正式掲載済み）: 思考を整理するためのローカルファーストな知識管理・ノートアプリ（Windows Desktop App / インストーラ配布あり）
      - 技術スタック: Wails / Go / Vue 3 / TypeScript / Vite / UnoCSS / Reka UI / Composables + Pinia / SQLite（Repository + Squirrel） / Markdown + Tiptap / WebDAV（資格情報は OS Credential Store 分離） / 外部 CLI・MCP 連携・Multi / Split Terminal
